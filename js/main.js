@@ -78,5 +78,3 @@ $overlay.click(function(){
 
 
 
-
-
