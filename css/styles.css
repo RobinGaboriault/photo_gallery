@@ -15,6 +15,11 @@ body {
 
 /* Making a fixed search bar(not functioning)    */
 
+#search {
+
+	padding-left: 10px;
+}
+
 #search_bar {
 
 	z-index: 1000;
@@ -90,29 +95,34 @@ body {
 	width: 60%;
 	flex-direction: row;
 	flex-wrap: wrap;
-	align-content: space-around;
+	justify-content: center;
 }
+
+/* Lightbox style */ 
 
 
 #overlay {
 
 	z-index: 1001;
-	position: fixed;
 	background-color: rgba(0,0,0,0.8);
 	width: 100%;
 	height: 100%;
-	position: absolute;
+	position: fixed;
 	top: 0;
 	left: 0;
 	display: none;
 	text-align: center;
 }
 
-#overlay img {
+/* Image selected when lightbox appear */
+
+#overlayImage {
 	max-width: 600px;
 	width: 50%;
 	margin-top: 10%;
 }
+
+/* Image caption */
 
 #overlay p {
 	
@@ -121,6 +131,26 @@ body {
 	width: 40%;
 	color: white;
 }
+
+
+/*  Styling Arrows for lightbox */
+
+#leftArrow {
+
+	position: fixed;
+	right: 80%;
+	top: 8%;
+	width: 24px;
+}
+
+#rightArrow {
+
+	position: fixed;
+	left: 80%;
+	top: 8%;
+	width: 24px;
+}
+
 
  /*   Tablet Styling */
 
@@ -132,12 +162,12 @@ body {
 #search_bar {
 
 
-	max-width: 360px;
 	width: 100%;
 }
 
 #search_bar input {
 
+	max-width: 360px;
 	width: 100%;
 }
 
@@ -155,14 +185,53 @@ body {
 	padding-right: 20px;
 }
 
-#overlay img {
+#overlayImage {
 
-	max-width: 600px;
+	max-width: 450px;
 	width: 80%;
 }
 
+#leftArrow {
+
+	position: fixed;
+	right: 85%;
+	top: 25%;
+	width: 36px;
 }
 
+#rightArrow {
+
+	position: fixed;
+	left: 85%;
+	top: 25%;
+	width: 36px;
+}
+
+
+}
+
+/* Media Query for 1024px and wider */
+
+@media only screen and (min-width: 1024px) {
+
+#overlayImage {
+
+	max-width: 600px;
+}
+
+#leftArrow {
+
+	top: 35%;
+	width: 48px;
+}
+
+#rightArrow {
+
+	top: 35%;
+	width: 48px;
+}
+
+}
 
 
 /* Media Query for 1040px and wider */
@@ -180,7 +249,12 @@ body {
 #search_bar {
 
 	padding-top: 40px;
-	max-width: 460px;
+
+}
+
+#search_bar input {
+
+	max-width: 480px;
 }
 /* Photo Gallery Flex Box */
 
@@ -207,5 +281,29 @@ body {
 	max-height: 200px;
 	margin: 30px 30px 30px 30px;
 }
+
+#overlayImage {
+
+	max-width: 600px;
+}
+
+/* Lightbox Arrows */
+
+#leftArrow {
+
+	position: fixed;
+	right: 80%;
+	top: 40%;
+	width: 50px;
+}
+
+#rightArrow {
+
+	position: fixed;
+	left: 80%;
+	top: 40%;
+	width: 50px;
+}
+
 
 }
