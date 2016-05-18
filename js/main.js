@@ -91,8 +91,7 @@ $("#photo_gallery a").click(function(event){
 
 //Clicking on arrow to show the last picture
 $leftArrow.click(function(event){
-    getLastImage();
-     $image.show();
+    getPrevImage();
 });
 
 //Clicking on arrow to show the next picture
@@ -107,23 +106,26 @@ function getCurrentImage (currentImage) {
     $image.attr('src', thisImageLocation);
 }
 
+function getPrevImage() {
+    imageParent = $(thisImage).parent().prev();
+    if(prevImageParent.length!=0){
+        thisImage = $(imageParent).children('a');
+        //imageLocation = $(thisImage).attr("href");
+        //$image.attr("src", imageLoocation);
+    }
+    
+    getCurrentImage(thisImage);
+}
+
 function getNextImage() {
-    nextImageParent = $(thisImage).parent().next();
-    nextImage = $(nextImageParent).children('a');
-    nextImageLocation = $(nextImage).attr('href');
-    $overlayImage.attr('src', nextImageLocation);
-    getCurrentImage(nextImageParent);
+    imageParent = $(thisImage).parent().next();
+    if(imageParent.length!=0){
+    thisImage = $(imageParent).children("a");
+      // imageLocation = $(thisImage).attr("href");
+      // $image.attr("src", imageLocation);
+    }
+    getCurrentImage(thisImage);
 }
-
-function getLastImage() {
-    lastImageParent = $(thisImage).parent().last();
-    lastImage = $(lastImageParent).children('a');
-    lastImageLocation = $(lastImage).attr('href');
-    $overlayImage.attr('src', lastImageLocation);
-    getCurrentImage(lastImageParent);
-}
-
-
 
 
 // Hide overlay when clicking outside of image
