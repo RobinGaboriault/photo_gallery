@@ -50,6 +50,7 @@ $("#photo_gallery a").click(function (event) {
 // When the next button is clicked
 $rightArrow.on("click", function(event) {
     event.preventDefault();
+    event.stopPropagation();
     getNextImage();
 });
 
@@ -63,6 +64,7 @@ $("body").keydown(function(event){
 // When the previous button is clicked
 $leftArrow.on("click", function(event){
     event.preventDefault();
+    event.stopPropagation();
     getPrevImage();
 });
 
