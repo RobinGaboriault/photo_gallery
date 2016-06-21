@@ -3,10 +3,6 @@ var $;
 var $overlay = $('<div id="overlay"></div>');
 var $image = $('<img id="overlayImage">');
 var $caption = $("<p></p>");
-var $currentImage;
-var $imageLocation;
-var imageCaption;
-
 
 /* Variables for Left/Right arrows */
 var $leftArrow = $('<a href=""><img id="leftArrow" src="pictures/keyboard-left-arrow-button.svg"/>');

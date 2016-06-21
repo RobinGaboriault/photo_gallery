@@ -94,6 +94,7 @@ ul {
 
 	padding-top: 80px;
 	margin: auto;
+    padding-left: 0;
 	display: flex;
 	width: 60%;
 	flex-direction: row;
