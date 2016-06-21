@@ -1,66 +1,98 @@
-
-$(document).ready(function() {       
-
-var $overlay = $('<div id="overlay"></div>'); 
-
-var $image = $('<img id="overlayImage">');  
-
+/* Variables for Overlay*/
+var $;
+var $overlay = $('<div id="overlay"></div>');
+var $image = $('<img id="overlayImage">');
 var $caption = $("<p></p>");
+var $currentImage;
+var $imageLocation;
+var imageCaption;
 
-var $lastLightboxImage = $('<img>');
 
-var $nextLightboxImage = $('<img>');
-
+/* Variables for Left/Right arrows */
 var $leftArrow = $('<a href=""><img id="leftArrow" src="pictures/keyboard-left-arrow-button.svg"/>');
-
 var $rightArrow = $('<a href=""><img id="rightArrow" src="pictures/keyboard-right-arrow-button.svg"/>');
 
-
-// Add image to overlay
-$overlay.append($image);
-
-//Add caption to overlay
-$overlay.append($caption);
-
-//Add arrows for the slideshow
-$overlay.append($leftArrow);
-
-$overlay.append($rightArrow);
-
-//Add overlay
+//Appending overlay to body
 $("body").append($overlay);
+$($overlay).append($image);
+$($overlay).append($caption);
+$($overlay).append($leftArrow);
+$($overlay).append($rightArrow);
+
+// clicking on an image to make the overlay appear
+
+$("#photo_gallery a").click(function (event) {
+
+	//Prevent image to link a dead end
+	event.preventDefault();
+
+  //Show the overlay
+	$overlay.fadeIn(1000);
 
 
+	//Get the href
+	var $imageLocation = $(this).attr("href");
 
-// Click event on a link to an image 
-$("#photo_gallery a").click(function(event){
-    event.preventDefault();
-    var imageLocation = $(this).attr("href");
-    // Update overlay with the image linked 
-    $image.attr("src", imageLocation);
+// Updates the ooverlay 
+	$image.attr("src", $imageLocation);
 
-    getCurrentImage(this);
+// Find the children alt
+	var imageCaption = $(this).children("img").attr("alt");
+  // This adds the text from the alt1 
+	$caption.text(imageCaption);
 
-    // Show overlay
-    $overlay.show();
-
-    //Get child alt attribute and set caption
-    var captionText = $(this).children("img").attr("alt");
-    $caption.text(captionText);
-
+  $currentImage = $(this).children("img");
 
 });
 
 
 
+//Show next image
+var next = function (e) {
+  $imageLocation = $currentImage.parent("li").next().children("a").attr("href");
+  $image.attr("src", $imageLocation);
+  imageCaption = $currentImage.parent("li").next().children("a").children("img").attr("alt");
+  $caption.text(imageCaption);
+  $overlay.show();
+  $currentImage = $currentImage.parent("li").next().children("a").children("img");
+};
+
+//Show previous image
+var prev = function() {
+  $imageLocation = $currentImage.parent("li").prev().children("a").attr("href");
+  $image.attr("src", $imageLocation);
+  imageCaption = $currentImage.parent("li").prev().children("a").children("img").attr("alt");
+  $caption.text(imageCaption);
+  $overlay.show();
+  $currentImage = $currentImage.parent("li").prev().children("a").children("img");
+};
+
+
+
+//Clicking right arrow execute function nextImage
+$('#rightArrow').click(function() {
+  if ($currentImage.parents("li").next().children("a").children("img").length !== 0) {
+      next();
+  }
+});
+
+//Clicking left arrow, execute function previousImage
+$('#leftArrow').click(function() {
+  if ($currentImage.parents("li").next().children("a").children("img").length !== 0) {
+      prev();
+  }
+});
+
+
 // search function
 
 (function() {                             // Lives in an IIFE
+  "use strict";
   var $imgs = $('#photo_gallery img');    // Get the images
   var $search = $('#search');             // Get the input element
   var cache = [];                         // Create an array called cache
 
-  $imgs.each(function() {                   // For each image
+  $imgs.each(function () {                   // For each image
     cache.push({                            // Add an object to the cache array
       element: this,                        // This image
       text: this.alt.trim().toLowerCase()   // Its alt text (lowercase trimmed)
@@ -84,48 +116,9 @@ $("#photo_gallery a").click(function(event){
     $search.on('input', filter);          // Use input event to call filter()
   } else {                                // Otherwise
     $search.on('keyup', filter);          // Use keyup event to call filter()
-  }              
+  }            
 
 }());
-
-
-//Clicking on arrow to show the last picture
-$leftArrow.click(function(event){
-    getPrevImage();
-});
-
-//Clicking on arrow to show the next picture
-$rightArrow.click(function(event){
-    getNextImage();
-    $image.show();
-});
-
-function getCurrentImage (currentImage) {
-    thisImage = $(currentImage).children("a");
-    thisImageLocation = $(thisImage).attr('href');
-    $image.attr('src', thisImageLocation);
-}
-
-function getPrevImage() {
-    imageParent = $(thisImage).parent().prev();
-    if(prevImageParent.length!=0){
-        thisImage = $(imageParent).children('a');
-        //imageLocation = $(thisImage).attr("href");
-        //$image.attr("src", imageLoocation);
-    }
-    
-    getCurrentImage(thisImage);
-}
-
-function getNextImage() {
-    imageParent = $(thisImage).parent().next();
-    if(imageParent.length!=0){
-    thisImage = $(imageParent).children("a");
-      // imageLocation = $(thisImage).attr("href");
-      // $image.attr("src", imageLocation);
-    }
-    getCurrentImage(thisImage);
-}
 
 
 // Hide overlay when clicking outside of image
@@ -133,17 +126,10 @@ $overlay.click(function(){
 	$overlay.hide();
 
 });
+
+// Hide overlay when Escape key is pressed
+$(document).keydown(function(k) {
+  if(k.keyCode == 27 ){         
+    $overlay.hide();
+  }
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
