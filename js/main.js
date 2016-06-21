@@ -138,6 +138,7 @@ function getNextImage() {//Create function called getNextImage
 
 }());
 
+// Exiting Overlay
 
 // Hide overlay when clicking outside of image
 $overlay.click(function(){
