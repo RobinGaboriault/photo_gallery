@@ -26,63 +26,83 @@ $("#photo_gallery a").click(function (event) {
 	//Prevent image to link a dead end
 	event.preventDefault();
 
+    getCurrentImage(this);
+    
   //Show the overlay
 	$overlay.fadeIn(1000);
 
-
+    
 	//Get the href
 	var $imageLocation = $(this).attr("href");
 
-// Updates the ooverlay 
+// Updates the overlay 
 	$image.attr("src", $imageLocation);
 
 // Find the children alt
-	var imageCaption = $(this).children("img").attr("alt");
+	var captionText = $(this).children("img").attr("alt");
   // This adds the text from the alt1 
-	$caption.text(imageCaption);
+	$caption.text(captionText);
 
-  $currentImage = $(this).children("img");
+  //$currentImage = $(this).children("img");
 
 });
 
+// When the next button is clicked
+$rightArrow.on("click", function(event) {
+    event.preventDefault();
+    getNextImage();
+});
 
-
-//Show next image
-var next = function (e) {
-  $imageLocation = $currentImage.parent("li").next().children("a").attr("href");
-  $image.attr("src", $imageLocation);
-  imageCaption = $currentImage.parent("li").next().children("a").children("img").attr("alt");
-  $caption.text(imageCaption);
-  $overlay.show();
-  $currentImage = $currentImage.parent("li").next().children("a").children("img");
-};
-
-//Show previous image
-var prev = function() {
-  $imageLocation = $currentImage.parent("li").prev().children("a").attr("href");
-  $image.attr("src", $imageLocation);
-  imageCaption = $currentImage.parent("li").prev().children("a").children("img").attr("alt");
-  $caption.text(imageCaption);
-  $overlay.show();
-  $currentImage = $currentImage.parent("li").prev().children("a").children("img");
-};
-
-
-
-//Clicking right arrow execute function nextImage
-$('#rightArrow').click(function() {
-  if ($currentImage.parents("li").next().children("a").children("img").length !== 0) {
-      next();
+// When right arrow key is pressed
+$("body").keydown(function(event){
+    if ( event.which == 39 ) {
+        getNextImage();
   }
 });
 
-//Clicking left arrow, execute function previousImage
-$('#leftArrow').click(function() {
-  if ($currentImage.parents("li").next().children("a").children("img").length !== 0) {
-      prev();
+// When the previous button is clicked
+$leftArrow.on("click", function(event){
+    event.preventDefault();
+    getPrevImage();
+});
+
+// When left arrow key is pressed
+$("body").keydown(function(event){
+    if ( event.which == 37 ) {
+        getPrevImage();
   }
 });
 
+function getCurrentImage(currentImage) {
+    thisImage = currentImage;
+    var imageLocation = $(currentImage).attr("href");// accessing attributes from currentImage to pull the href value 
+    $image.attr("src", imageLocation);//Update overlay with the image linked in the link
+
+    //Get child's alt attribute and set caption
+    var captionText = $(currentImage).children("img").attr("alt");
+    $caption.text(captionText);
+}
+
+function getPrevImage() {//Create function called getPrevImage
+    imageParent = $(thisImage).parent().prev();
+    if(imageParent.length!==0){
+      thisImage = $(imageParent).children("a");
+      // imageLocation = $(thisImage).attr("href");
+      // $image.attr("src", imageLocation);
+    }
+    getCurrentImage(thisImage);
+    
+}
+
+function getNextImage() {//Create function called getNextImage
+    imageParent = $(thisImage).parent().next();
+    if(imageParent.length!==0){
+    thisImage = $(imageParent).children("a");
+    // imageLocation = $(thisImage).attr("href");
+    // $image.attr("src", imageLocation);
+    }
+    getCurrentImage(thisImage);
+}
 
 // search function
 
